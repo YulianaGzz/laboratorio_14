@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario Tecnológico</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#1a1a2e;
+            color:white;
+            padding:40px;
+        }
+
+        h1{
+            color:#4a90d9;
+        }
+
+        .btn{
+            display:inline-block;
+            background:#4a90d9;
+            color:white;
+            text-decoration:none;
+            padding:10px 20px;
+            border-radius:6px;
+            margin-bottom:20px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th{
+            background:#0f3460;
+            padding:12px;
+        }
+
+        td{
+            padding:10px;
+            border-bottom:1px solid #333;
+        }
+
+        tr:hover{
+            background:#16213e;
+        }
+
+        .editar{
+            color:#4a90d9;
+            text-decoration:none;
+        }
+
+        .eliminar{
+            color:#ff6666;
+            text-decoration:none;
+            margin-left:10px;
+        }
+
+        .vacio{
+            color:#aaa;
+            font-style:italic;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>💻 Inventario de Productos Tecnológicos</h1>
+
+<a class="btn" href="/nuevo">
+    + Nuevo Producto
+</a>
+
+<div th:if="${#lists.isEmpty(productos)}"
+     class="vacio">
+
+    No hay productos registrados.
+
+</div>
+
+<table th:unless="${#lists.isEmpty(productos)}">
+
+    <tr>
+        <th>Nombre</th>
+        <th>Marca</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Acciones</th>
+    </tr>
+
+    <tr th:each="p : ${productos}">
+
+        <td th:text="${p.nombre}"></td>
+        <td th:text="${p.marca}"></td>
+        <td th:text="${p.categoria}"></td>
+        <td th:text="${p.precio}"></td>
+        <td th:text="${p.stock}"></td>
+
+        <td>
+
+            <a class="editar"
+               th:href="@{/editar/{id}(id=${p.id})}">
+                Editar
+            </a>
+
+            <a class="eliminar"
+               th:href="@{/eliminar/{id}(id=${p.id})}"
+               onclick="return confirm('¿Eliminar producto?')">
+                Eliminar
+            </a>
+
+        </td>
+
+    </tr>
+
+</table>
+
+</body>
+</html>

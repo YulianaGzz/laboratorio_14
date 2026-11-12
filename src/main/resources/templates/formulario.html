@@ -2,44 +2,110 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Nuevo Contacto</title>
+    <title>Producto</title>
+
     <style>
-        body  { font-family: Arial, sans-serif; background: #1a1a2e;
-                color: #e0e0e0; display: flex; justify-content: center;
-                margin-top: 60px; }
-        .caja { background: #16213e; padding: 40px; border-radius: 12px;
-                border: 1px solid #4a90d9; width: 380px; }
-        h1    { color: #f0c040; text-align: center; margin-bottom: 24px; }
-        label { display: block; margin-bottom: 4px; color: #aaa; font-size: .9em; }
-        input { width: 100%; padding: 10px; margin-bottom: 16px;
-                background: #0f3460; border: 1px solid #4a90d9;
-                border-radius: 6px; color: #fff; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #4a90d9;
-                 border: none; border-radius: 6px; color: white;
-                 font-size: 1em; cursor: pointer; }
-        a     { display: block; text-align: center; margin-top: 16px;
-                color: #4a90d9; }
+        body{
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            display:flex;
+            justify-content:center;
+            margin-top:50px;
+        }
+
+        .caja{
+            background:#16213e;
+            width:400px;
+            padding:40px;
+            border-radius:12px;
+            border:1px solid #4a90d9;
+        }
+
+        h1{
+            text-align:center;
+            color:#4a90d9;
+        }
+
+        label{
+            display:block;
+            margin-top:10px;
+            margin-bottom:5px;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            box-sizing:border-box;
+            border:1px solid #4a90d9;
+            border-radius:6px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            margin-top:20px;
+            background:#4a90d9;
+            color:white;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+        }
+
+        a{
+            display:block;
+            text-align:center;
+            margin-top:15px;
+            color:#4a90d9;
+        }
     </style>
 </head>
+
 <body>
-    <div class="caja">
-        <h1> Nuevo Contacto</h1>
-        <form th:action="@{/guardar}" th:object="${contacto}" method="post">
-            <label>Nombre</label>
-            <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
 
-            <label>Apellido</label>
-            <input type="text" th:field="*{apellido}" placeholder="Apellido" required />
+<div class="caja">
 
-            <label>Email</label>
-            <input type="email" th:field="*{email}" placeholder="correo@ejemplo.com" required />
+    <h1 th:text="${producto.id} != null ?
+        '✏️ Editar Producto' :
+        '💻 Nuevo Producto'">
+    </h1>
 
-            <label>Teléfono</label>
-            <input type="tel" th:field="*{telefono}" placeholder="81 1234 5678" />
+    <form
+            th:action="${producto.id} != null ? @{/actualizar} : @{/guardar}"
+            th:object="${producto}"
+            method="post">
 
-            <button type="submit">Guardar contacto</button>
-        </form>
-        <a href="/contactos">← Ver todos los contactos</a>
-    </div>
+        <input type="hidden" th:field="*{id}" />
+
+        <label>Nombre</label>
+        <input type="text" th:field="*{nombre}" required />
+
+        <label>Marca</label>
+        <input type="text" th:field="*{marca}" required />
+
+        <label>Categoría</label>
+        <input type="text" th:field="*{categoria}" required />
+
+        <label>Precio</label>
+        <input type="number"
+               step="0.01"
+               th:field="*{precio}"
+               required />
+
+        <label>Stock</label>
+        <input type="number"
+               th:field="*{stock}"
+               required />
+
+        <button type="submit">
+            💾 Guardar Producto
+        </button>
+
+    </form>
+
+    <a href="/productos">← Regresar</a>
+
+</div>
+
 </body>
 </html>
